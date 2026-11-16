@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FLASHBACK // LIVE - TV Slideshow Display</title>
+  <meta name="theme-color" content="#000000">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="display-body">
+  <div id="tvStage" class="tv-stage">
+    <!-- Blurred Dynamic Ambient Backdrop -->
+    <div id="tvBackdrop" class="tv-backdrop"></div>
+
+    <!-- HUD Top Header -->
+    <header id="tvHudHeader" class="tv-hud-header">
+      <div class="tv-hud-left">
+        <div class="brand-text" style="font-size: 1.5rem;">
+          <span>FLASHBACK</span>
+          <span class="brand-slash">//</span>
+          <span>LIVE</span>
+        </div>
+        <span id="tvLiveBadge" class="live-badge">
+          <span class="live-dot"></span> LIVE SYNC
+        </span>
+        <span id="tvPhotoCounter" class="tv-pill">0 MOMENTS</span>
+      </div>
+
+      <div class="tv-hud-right">
+        <div id="tvClock" class="tv-clock">00:00:00</div>
+        <button id="fullscreenBtn" type="button" class="btn btn-secondary btn-icon" title="Toggle Fullscreen" onclick="document.documentElement.requestFullscreen ? (!document.fullscreenElement ? document.documentElement.requestFullscreen() : document.exitFullscreen()) : null">
+          ⛶
+        </button>
+      </div>
+    </header>
+
+    <!-- Empty State (When no photos uploaded yet) -->
+    <div id="tvEmptyState" class="tv-empty-state" style="display: none;">
+      <div class="tv-empty-logo">📸</div>
+      <h1 class="brand-text" style="font-size: 2.8rem; margin-bottom: 0.5rem;">FLASHBACK // LIVE</h1>
+      <p class="tv-empty-desc">
+        Welcome to the live event photo booth! Snap the QR code below on your phone to upload the first memory and light up the big screen.
+      </p>
+    </div>
+
+    <!-- Main Hero Slideshow Container -->
+    <main id="tvSlideContainer" class="tv-slide-container">
+      <div id="tvSlideCard" class="tv-slide-card">
+        <img id="tvHeroImage" src="" alt="Event Moment" class="tv-hero-image">
+        
+        <!-- Slide Details Overlay -->
+        <div class="tv-card-overlay">
+          <div class="tv-guest-info">
+            <div id="tvGuestAvatar" class="tv-guest-avatar">📸</div>
+            <div class="tv-guest-details">
+              <h3 id="tvGuestName">Guest</h3>
+              <p id="tvCaption" class="tv-caption-text"></p>
+            </div>
+          </div>
+
+          <div class="tv-meta-pills">
+            <span id="tvFilterPill" class="tv-pill" style="display: none;">✨ RETRO</span>
+            <span class="tv-pill">
+              <span>❤️</span>
+              <span id="tvLikeCount">0</span>
+            </span>
+            <span id="tvTimestamp" class="tv-pill">Just now</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Alternate Mosaic Photo Wall View -->
+    <div id="tvMosaicContainer" class="tv-mosaic-container"></div>
+
+    <!-- New Photo Arrival Spotlight Banner -->
+    <div id="tvAlertBanner" class="tv-alert-banner">
+      <span style="font-size: 2rem;">✨</span>
+      <h2 id="tvAlertText">NEW PHOTO INCOMING!</h2>
+    </div>
+
+    <!-- Floating Scannable QR Code Widget -->
+    <aside id="tvQrWidget" class="tv-qr-widget">
+      <div id="tvQrBox" class="tv-qr-box">
+        <!-- Dynamic QR Code rendered by display.js -->
+        <div style="font-size:0.7rem; color:#888;">Generating QR...</div>
+      </div>
+      <div class="tv-qr-copy">
+        <div class="tv-qr-title">Scan & Broadcast</div>
+        <div class="tv-qr-subtitle">Add your photo to this TV 📱</div>
+        <div id="tvQrUrl" class="tv-qr-url">localhost:8000</div>
+      </div>
+    </aside>
+
+    <!-- TV Controls Cheat Sheet / Shortcut Toast -->
+    <div class="tv-help-toast">
+      <kbd>Space</kbd> Pause &bull; <kbd>F</kbd> Fullscreen &bull; <kbd>G</kbd> Mosaic Wall &bull; <kbd>Q</kbd> QR &bull; <kbd>&larr; &rarr;</kbd> Slide
+    </div>
+
+    <!-- Slide Rotation Progress Bar -->
+    <div id="tvSlideProgress" class="tv-slide-progress"></div>
+  </div>
+
+  <script src="/static/js/display.js"></script>
+</body>
+</html>
+

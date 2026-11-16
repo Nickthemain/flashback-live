@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FLASHBACK // LIVE - Event Photo Booth</title>
+  <meta name="theme-color" content="#07070d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="upload-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand-text">
+        <span>FLASHBACK</span>
+        <span class="brand-slash">//</span>
+        <span>LIVE</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span id="statusBadge" class="live-badge">
+          <span class="live-dot"></span> LIVE EVENT STREAM
+        </span>
+        <a href="/display" target="_blank" class="btn btn-secondary btn-icon" title="Open TV Slideshow">
+          📺
+        </a>
+      </div>
+    </header>
+
+    <!-- Hero Pitch -->
+    <div class="hero-banner">
+      <h1>Snap & Broadcast</h1>
+      <p>Your photos appear instantaneously on the live TV event display!</p>
+    </div>
+
+    <!-- Upload Form Card -->
+    <div id="uploadFormCard" class="card-upload">
+      <!-- Drag & Drop Zone -->
+      <div id="dropZone" class="drop-zone">
+        <div class="drop-zone-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+        </div>
+        <h3>Drop Photo Here</h3>
+        <p>or tap to select from your photo library</p>
+        <button type="button" class="camera-cta-btn" onclick="document.getElementById('cameraInput').click(); event.stopPropagation();">
+          📸 Take Camera Snap
+        </button>
+      </div>
+
+      <!-- Hidden File Inputs -->
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none">
+      <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none">
+
+      <!-- Live Preview & Filter Studio -->
+      <div id="previewContainer" class="preview-container">
+        <div class="preview-wrapper">
+          <img id="previewImage" src="" alt="Selected Preview">
+          <button id="removePreviewBtn" class="preview-remove-btn" type="button" title="Remove Photo">✕</button>
+        </div>
+
+        <label class="filter-selector-label">⚡ Photo Aesthetic Filter</label>
+        <div class="filters-scroll">
+          <button type="button" class="filter-chip active" data-filter="normal">Normal</button>
+          <button type="button" class="filter-chip" data-filter="cyber">Cyber Glow</button>
+          <button type="button" class="filter-chip" data-filter="vintage">90s Retro</button>
+          <button type="button" class="filter-chip" data-filter="noir">Noir Glam</button>
+          <button type="button" class="filter-chip" data-filter="sunset">Golden Hour</button>
+        </div>
+      </div>
+
+      <!-- Metadata Fields -->
+      <div class="form-group">
+        <label for="guestName" class="form-label">Your Name / Handle</label>
+        <input type="text" id="guestName" class="form-control" placeholder="e.g. Alex & Sam" maxlength="100">
+      </div>
+
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <label for="caption" class="form-label">Caption or Shoutout (Optional)</label>
+          <span id="charCounter" style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono);">0 / 500</span>
+        </div>
+        <textarea id="caption" class="form-control" rows="2" placeholder="Leave a sweet memory or party shoutout..." maxlength="500"></textarea>
+
+        <!-- Quick Reaction Tag Buttons -->
+        <div class="tags-row">
+          <button type="button" class="tag-btn" data-emoji="🔥">🔥 Lit</button>
+          <button type="button" class="tag-btn" data-emoji="🎉">🎉 Party</button>
+          <button type="button" class="tag-btn" data-emoji="❤️">❤️ Love</button>
+          <button type="button" class="tag-btn" data-emoji="🚀">🚀 Hyped</button>
+          <button type="button" class="tag-btn" data-emoji="📸">📸 Iconic</button>
+          <button type="button" class="tag-btn" data-emoji="🥂">🥂 Cheers</button>
+        </div>
+      </div>
+
+      <!-- Broadcast Consent Checkbox (Unchecked by default) -->
+      <div class="form-group" style="margin-top: 1rem; display: flex; align-items: flex-start; gap: 10px;">
+        <input type="checkbox" id="consentCheckbox" style="margin-top: 3px; width: 18px; height: 18px; accent-color: var(--neon-cyan); cursor: pointer;">
+        <label for="consentCheckbox" style="font-size: 0.82rem; color: var(--text-secondary); cursor: pointer; line-height: 1.4;">
+          I consent to displaying this photo publicly on the live TV event screen.
+        </label>
+      </div>
+
+      <!-- Progress Bar -->
+      <div id="progressContainer" class="progress-container">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+
+      <!-- Submit Action -->
+      <div class="upload-actions">
+        <button id="uploadBtn" type="button" class="btn btn-primary">
+          <span>🚀 Broadcast to Big Screen</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Success Feedback Card -->
+    <div id="successCard" class="success-card">
+      <div class="success-icon">✓</div>
+      <h2>Sent to the Big Screen!</h2>
+      <p style="color: var(--text-secondary); margin-top: 4px;">Look up at the TV display to see your photo live!</p>
+      <img id="successThumb" src="" alt="Uploaded Photo" class="success-thumb">
+      <button id="uploadAnotherBtn" type="button" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">
+        📸 Snap Another Photo
+      </button>
+    </div>
+
+    <!-- Live Event Gallery Feed -->
+    <section class="gallery-section">
+      <div class="gallery-header">
+        <h3 style="font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+          <span>Event Feed</span>
+          <span id="totalPhotosStat" class="live-badge" style="font-size: 0.68rem; padding: 2px 8px;">0</span>
+        </h3>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">Real-time stream</span>
+      </div>
+
+      <div id="galleryGrid" class="gallery-grid"></div>
+      <p id="galleryEmpty" style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 2rem 0;">
+        No photos yet. Be the first to snap a photo and light up the big screen! ✨
+      </p>
+    </section>
+  </div>
+
+  <script src="/static/js/upload.js"></script>
+</body>
+</html>
+
